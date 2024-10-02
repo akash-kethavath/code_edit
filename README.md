@@ -1,6 +1,6 @@
-# CodePencil ✒️
+# Code_easy ✒️
  
-CodePencil is a basic Online Code Editor that lets you write and preview HTML, CSS, and JavaScript code in real-time. 
+CodeEasy is a basic Online Code Editor that lets you write and preview HTML, CSS, and JavaScript code in real-time. 
 
 ## Usage
 
