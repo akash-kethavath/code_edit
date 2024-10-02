@@ -13,7 +13,7 @@ CodeEasy is a basic Online Code Editor that lets you write and preview HTML, CSS
 - **Preview**: The output of your code will be displayed on the right side of the editor.
 
 ## Snap
-![snap](snap.png)) 
+![snap](https://github.com/akash-kethavath/code_edit/blob/3f13b114a7785c456f72d6ff9efa1b9b984d9f1f/Screenshot%202024-10-02%20123416.png)) 
 
 ## 
 ### Leave a 🌟 if it was Helpful!!
