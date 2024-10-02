@@ -6,14 +6,14 @@
 }
 
 body {
-    background-color: #282a36; /* Dark background for dark mode */
-    color: #f8f8f2; /* Light text color */
+    background-color: #282a36; 
+    color: #f8f8f2; 
 }
 
 h2 {
     text-align: center;
     margin-top: 1%;
-    color: #f8f8f2; /* Light color for headers */
+    color: #f8f8f2; 
 }
 
 .container {
@@ -30,16 +30,16 @@ h2 {
 
 /* Dracula Theme for Text Areas */
 textarea {
-    background-color: #282a36; /* Dracula dark background */
-    color: #f8f8f2; /* Light text color */
-    border: 1px solid #44475a; /* Slightly lighter border */
+    background-color: #282a36; 
+    color: #f8f8f2; 
+    border: 1px solid #44475a; 
     width: 100%;
     height: 27%;
     padding: 10px 20px;
     outline: none;
     font-size: 18px;
-    border-radius: 5px; /* Slight border rounding */
-    font-family: 'Courier New', Courier, monospace; /* Code-like font */
+    border-radius: 5px; 
+    font-family: 'Courier New', Courier, monospace; 
 }
 
 /* Syntax Highlighting Colors (Dracula Theme) */
@@ -49,31 +49,31 @@ textarea::selection {
 }
 
 textarea span.keyword {
-    color: #ff79c6; /* Keyword color */
+    color: #ff79c6; 
 }
 
 textarea span.string {
-    color: #f1fa8c; /* String color */
+    color: #f1fa8c; 
 }
 
 textarea span.function {
-    color: #50fa7b; /* Function color */
+    color: #50fa7b; 
 }
 
-/* Styling for Iframe */
+
 iframe {
-    background-color: #1e1e1e; /* Dark background for iframe */
+    background-color: #1e1e1e; /
     width: 100%;
     height: 90%;
-    border: 1px solid #44475a; /* Slightly lighter border */
+    border: 1px solid #44475a; 
     outline: none;
 }
 
-/* Dracula Themed Label */
+
 label {
     display: flex;
     align-items: center;
-    background-color: #44475a; /* Label background */
+    background-color: #44475a; 
     color: #f8f8f2;
     padding: 0.5%;
 }
