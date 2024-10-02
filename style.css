@@ -1,59 +1,82 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', 'sans-serif';
     box-sizing: border-box;
-}
-body{
-    background-color: #454545;
-    color: #00ff00;
+    font-family: 'Poppins', sans-serif;
 }
 
-h2{
+body {
+    background-color: #282a36; 
+    color: #f8f8f2; 
+}
+
+h2 {
     text-align: center;
     margin-top: 1%;
+    color: #f8f8f2; 
 }
-.container{
+
+.container {
     width: 100%;
     height: 100vh;
     padding: 15px;
     display: flex;
 }
 
-
-.input, .output{
+.input, .output {
     flex-basis: 50%;
     padding: 10px;
 }
 
-
-textarea{
-    background-color: #1f1f1f;
+/* Dracula Theme for Text Areas */
+textarea {
+    background-color: #282a36; 
+    color: #f8f8f2;
+    border: 1px solid #44475a; 
     width: 100%;
     height: 27%;
     padding: 10px 20px;
-    border: 0;
-    outline: 0;
+    outline: none;
     font-size: 18px;
-    color: #fff;
+    border-radius: 5px; 
+    font-family: 'Courier New', Courier, monospace; 
 }
 
-iframe{
-    background: #fff;
+textarea::selection {
+    background-color: #44475a;
+    color: #f8f8f2;
+}
+
+textarea span.keyword {
+    color: #ff79c6; 
+}
+
+textarea span.string {
+    color: #f1fa8c; 
+}
+
+textarea span.function {
+    color: #50fa7b; 
+}
+
+
+iframe {
+    background-color: #1e1e1e; 
     width: 100%;
     height: 90%;
-    border: 0;
-    outline: 0;
+    border: 1px solid #44475a; 
+    outline: none;
 }
 
-label img{
-    margin-right: 3px;
-    margin-left: 2px;
-}
-
-label{
+label {
     display: flex;
     align-items: center;
-    background: #111;
+    background-color: #44475a; 
+    color: #f8f8f2;
     padding: 0.5%;
+}
+
+label img {
+    margin-right: 3px;
+    margin-left: 2px;
 }
