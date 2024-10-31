@@ -1,84 +1,66 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #282a36; 
-    color: #f8f8f2; 
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
 }
 
-h2 {
-    text-align: center;
-    margin-top: 1%;
-    color: #f8f8f2; 
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
 }
 
-.container {
-    width: 100%;
-    height: 100vh;
-    padding: 15px;
-    display: flex;
+.boxes {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  justify-content: space-between;
 }
-
-.input, .output {
-    flex-basis: 50%;
-    padding: 10px;
-}
-
-/* Dracula Theme for Text Areas */
-textarea {
-    background-color: #282a36; 
-    color: #f8f8f2; 
-    border: 1px solid #44475a; 
-    width: 100%;
-    height: 27%;
-    padding: 10px 20px;
-    outline: none;
-    font-size: 18px;
-    border-radius: 5px; 
-    font-family: 'Courier New', Courier, monospace; 
-}
-
-/* Syntax Highlighting Colors (Dracula Theme) */
-textarea::selection {
-    background-color: #44475a;
-    color: #f8f8f2;
-}
-
-textarea span.keyword {
-    color: #ff79c6; 
-}
-
-textarea span.string {
-    color: #f1fa8c; 
-}
-
-textarea span.function {
-    color: #50fa7b; 
-}
-
 
 iframe {
-    background-color: #1e1e1e; /
-    width: 100%;
-    height: 90%;
-    border: 1px solid #44475a; 
-    outline: none;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  border: none;
 }
 
-
-label {
-    display: flex;
-    align-items: center;
-    background-color: #44475a; 
-    color: #f8f8f2;
-    padding: 0.5%;
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-left: 1px solid #ccc;
 }
 
-label img {
-    margin-right: 3px;
-    margin-left: 2px;
+.editor-container .CodeMirror {
+  flex-grow: 1;
+}
+
+.editor-header {
+  padding: 0 10px;
+}
+
+.button-container {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  display: flex;
+}
+
+.button-container>button {
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .boxes {
+    flex-direction: column;
+  }
+
+  .cm-s-monokai.CodeMirror {
+    max-height: 200px;
+  }
 }
