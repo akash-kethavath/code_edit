@@ -19,11 +19,14 @@
     <div class="editor-container">
       <div class="editor-header">
         <h1>Code Editor</h1>
-        <select id="language-select">
-          <option value="html">HTML</option>
-          <option value="css">CSS</option>
-          <option value="javascript">JavaScript</option>
-        </select>
+        <div class="controls">
+          <select id="language-select">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+          <button id="theme-toggle">Toggle Theme</button>
+        </div>
       </div>
       <textarea id="code-editor"></textarea>
     </div>
