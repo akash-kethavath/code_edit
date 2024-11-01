@@ -3,15 +3,16 @@ const languageSelect = document.getElementById('language-select');
 const runButton = document.getElementById('run-button');
 const output = document.getElementById('output');
 const themeToggle = document.getElementById('theme-toggle');
+const downloadButton = document.getElementById('download-button');
 
-let currentTheme = 'light';
+let currentTheme = 'dark';
 
 const defaultEditorSettings = {
   lineNumbers: true,
   matchBrackets: true,
   tabSize: 2,
   indentUnit: 2,
-  theme: 'light',
+  theme: 'dark',
   lineWrapping: true,
 };
 
@@ -29,53 +30,28 @@ const codeSnippets = {
   <title>HTML Example</title>
 </head>
 <body>
-  <h1>Welcome to HTML</h1>
-  <p>This is a sample HTML document.</p>
+  <h1>Hello, HTML!</h1>
 </body>
 </html>`,
   css: `body {
+  background-color: lightblue;
   font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
 h1 {
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 10px;
-}
-
-p {
-  margin-bottom: 20px;
+  color: navy;
+  margin-left: 20px;
 }`,
   javascript: `function greet(name) {
-  return \`Hello, \${name}! Welcome to JavaScript.\`;
+  return \`Hello, \${name}!\`;
 }
 
-console.log(greet('World'));
+console.log(greet('JavaScript'));
 
 // Example of an array method
 const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(num => num * 2);
-console.log(doubled);
-
-// Example of a class
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-  }
-
-  sayHello() {
-    console.log(\`Hi, I'm \${this.name} and I'm \${this.age} years old.\`);
-  }
-}
-
-const john = new Person('John', 30);
-john.sayHello();`
+console.log(doubled);`
 };
 
 languageSelect.addEventListener('change', (e) => {
@@ -87,6 +63,8 @@ languageSelect.addEventListener('change', (e) => {
 runButton.addEventListener('click', updateOutput);
 
 themeToggle.addEventListener('click', toggleTheme);
+
+downloadButton.addEventListener('click', downloadCode);
 
 function updateOutput() {
   const code = editor.getValue();
@@ -119,7 +97,7 @@ function updateOutput() {
       <body>
         ${language === 'html' ? content : ''}
         ${language === 'javascript' ? content : ''}
-        ${language === 'javascript' ? '<script>console.log = function(message) { const output = document.createElement("div"); output.textContent = message; document.body.appendChild(output); }</script>' : ''}
+        ${language === 'javascript' ? '<script>console.log = function(message) { const output = document.createElement("div"); output.textContent = JSON.stringify(message); document.body.appendChild(output); }</script>' : ''}
       </body>
     </html>
   `;
@@ -131,9 +109,40 @@ function toggleTheme() {
   document.body.classList.toggle('light-mode');
   editor.setOption('theme', currentTheme);
   updateOutput();
+  
+  const themeIcon = document.querySelector('#theme-toggle i');
+  if (currentTheme === 'dark') {
+    
+    themeIcon.classList.remove('ri-moon-line');
+    themeIcon.classList.add('ri-sun-line');
+  } else {
+    themeIcon.classList.remove('ri-sun-line');
+    themeIcon.classList.add('ri-moon-line');
+  }
 }
 
-// Initialize with HTML code and light theme
+function downloadCode() {
+  const code = editor.getValue();
+  const language = languageSelect.value;
+  const filename = `code-${language}.txt`;
+  
+  const blob = new Blob([code], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Set initial theme icon
+const themeIcon = document.querySelector('#theme-toggle i');
+themeIcon.classList.add('ri-sun-line');
+
+// Initialize with HTML code and dark theme
 editor.setValue(codeSnippets.html);
-document.body.classList.add('light-mode');
+document.body.classList.add('dark-mode');
 updateOutput();
