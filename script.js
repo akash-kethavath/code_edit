@@ -1,5 +1,6 @@
 const codeEditor = document.getElementById('code-editor');
 const languageSelect = document.getElementById('language-select');
+const runButton = document.getElementById('run-button');
 const output = document.getElementById('output');
 
 const defaultEditorSettings = {
@@ -19,12 +20,9 @@ const editor = CodeMirror.fromTextArea(codeEditor, {
 languageSelect.addEventListener('change', (e) => {
   const language = e.target.value;
   editor.setOption('mode', language);
-  updateOutput(); // Run code immediately when changing language
 });
 
-editor.on('change', () => {
-  updateOutput(); // Update output in real-time
-});
+runButton.addEventListener('click', updateOutput); // Run code when RUN button is clicked
 
 function updateOutput() {
   const code = editor.getValue();
@@ -36,14 +34,13 @@ function updateOutput() {
       content = code;
       break;
     case 'css':
-      content = `<style>${code}</style><div>Live CSS Preview</div>`;
+      content = `<style>${code}</style>`;
       break;
     case 'javascript':
-      content = `<script>${code}<\/script><div>Live JS Preview</div>`;
+      content = `<script>${code}<\/script>`;
       break;
   }
 
-  // Embed code inside HTML structure to handle CSS/JS properly
   output.srcdoc = `
     <html>
       <head>
@@ -60,4 +57,4 @@ function updateOutput() {
 
 // Initialize with some example HTML code
 editor.setValue('<h1>Hello, World!</h1>');
-updateOutput(); // Display the default code immediately
+updateOutput(); // Display the default code initially
