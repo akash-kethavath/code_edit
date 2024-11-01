@@ -1,7 +1,5 @@
 const codeEditor = document.getElementById('code-editor');
 const languageSelect = document.getElementById('language-select');
-const runButton = document.getElementById('run');
-const clearButton = document.getElementById('clear');
 const output = document.getElementById('output');
 
 const defaultEditorSettings = {
@@ -9,7 +7,7 @@ const defaultEditorSettings = {
   matchBrackets: true,
   tabSize: 2,
   indentUnit: 2,
-  theme: 'monokai',
+  theme: 'dracula', // Set theme to Dracula
   lineWrapping: true,
 };
 
@@ -21,9 +19,14 @@ const editor = CodeMirror.fromTextArea(codeEditor, {
 languageSelect.addEventListener('change', (e) => {
   const language = e.target.value;
   editor.setOption('mode', language);
+  updateOutput(); // Run code immediately when changing language
 });
 
-runButton.addEventListener('click', () => {
+editor.on('change', () => {
+  updateOutput(); // Update output in real-time
+});
+
+function updateOutput() {
   const code = editor.getValue();
   const language = languageSelect.value;
 
@@ -41,12 +44,8 @@ runButton.addEventListener('click', () => {
   }
 
   output.srcdoc = content;
-});
-
-clearButton.addEventListener('click', () => {
-  editor.setValue('');
-  output.srcdoc = '';
-});
+}
 
 // Initialize with some example HTML code
 editor.setValue('<h1>Hello, World!</h1>');
+updateOutput(); // Display the default code immediately
