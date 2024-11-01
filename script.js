@@ -1,9 +1,12 @@
 const codeEditor = document.getElementById('code-editor');
 const languageSelect = document.getElementById('language-select');
-const runButton = document.getElementById('run-button');
 const output = document.getElementById('output');
 const themeToggle = document.getElementById('theme-toggle');
 const downloadButton = document.getElementById('download-button');
+const errorIndicator = document.createElement('div');
+errorIndicator.id = 'error-indicator';
+errorIndicator.style.display = 'none';
+document.body.appendChild(errorIndicator);
 
 let currentTheme = 'dark';
 let currentLanguage = 'html';
@@ -72,11 +75,15 @@ languageSelect.addEventListener('change', (e) => {
   currentLanguage = newLanguage;
 });
 
-runButton.addEventListener('click', updateOutput);
-
 themeToggle.addEventListener('click', toggleTheme);
-
 downloadButton.addEventListener('click', downloadCode);
+
+// Auto-save and live preview
+editor.on('change', () => {
+  saveCurrentContent();
+  updateLocalStorage();
+  updateOutput();
+});
 
 function saveCurrentContent() {
   switch (currentLanguage) {
@@ -103,10 +110,26 @@ function getContent(language) {
   }
 }
 
-function updateOutput() {
-  saveCurrentContent();
+function updateLocalStorage() {
+  localStorage.setItem('htmlContent', htmlContent);
+  localStorage.setItem('cssContent', cssContent);
+  localStorage.setItem('jsContent', jsContent);
+  localStorage.setItem('currentLanguage', currentLanguage);
+}
 
-  output.srcdoc = `
+function loadFromLocalStorage() {
+  htmlContent = localStorage.getItem('htmlContent') || codeSnippets.html;
+  cssContent = localStorage.getItem('cssContent') || codeSnippets.css;
+  jsContent = localStorage.getItem('jsContent') || codeSnippets.javascript;
+  currentLanguage = localStorage.getItem('currentLanguage') || 'html';
+
+  languageSelect.value = currentLanguage;
+  editor.setOption('mode', currentLanguage);
+  editor.setValue(getContent(currentLanguage));
+}
+
+function updateOutput() {
+  const combinedCode = `
     <html>
       <head>
         <style>
@@ -120,8 +143,17 @@ function updateOutput() {
       <body>
         ${htmlContent}
         <script>
-          ${jsContent}
-          // Capture console.log output
+          // Error handling wrapper
+          (function() {
+            try {
+              ${jsContent}
+            } catch (error) {
+              console.error('JavaScript Error:', error.message);
+              window.parent.postMessage({ type: 'error', message: error.message }, '*');
+            }
+          })();
+
+          // Console output capture
           (function() {
             var old = console.log;
             var logger = document.createElement('div');
@@ -142,6 +174,8 @@ function updateOutput() {
       </body>
     </html>
   `;
+
+  output.srcdoc = combinedCode;
 }
 
 function toggleTheme() {
@@ -194,14 +228,20 @@ ${jsContent}
   URL.revokeObjectURL(url);
 }
 
+// Error handling
+window.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'error') {
+    errorIndicator.textContent = 'JavaScript Error: ' + event.data.message;
+    errorIndicator.style.display = 'block';
+  }
+});
+
 // Set initial theme icon
 const themeIcon = document.querySelector('#theme-toggle i');
 themeIcon.classList.add('ri-sun-line');
 
-// Initialize with HTML code and dark theme
-editor.setValue(codeSnippets.html);
-htmlContent = codeSnippets.html;
-cssContent = codeSnippets.css;
-jsContent = codeSnippets.javascript;
-document.body.classList.add('dark-mode');
+// Load saved content or initialize with default snippets
+loadFromLocalStorage();
+
+// Initial output update
 updateOutput();
