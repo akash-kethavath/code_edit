@@ -12,7 +12,7 @@ body {
 
 main {
   display: flex;
-  flex-direction: row; /* Side-by-side layout */
+  flex-direction: row;
   height: 100vh;
   width: 100vw;
 }
@@ -20,7 +20,7 @@ main {
 .editor-container {
   display: flex;
   flex-direction: column;
-  width: 50%; /* Input window width */
+  width: 50%;
   border-right: 1px solid #ccc;
   height: 100%;
 }
@@ -30,8 +30,8 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #282a36; /* Matching Dracula theme background */
-  color: #f8f8f2; /* Text color for better contrast */
+  background-color: #282a36;
+  color: #f8f8f2;
 }
 
 .editor-header h1 {
@@ -49,20 +49,51 @@ main {
   font-size: 1em;
 }
 
-#output {
-  width: 50%; /* Output window width */
+.output-container {
+  position: relative;
+  width: 50%;
   height: 100vh;
+}
+
+#run-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#run-button:hover {
+  background-color: #45a049;
+}
+
+#output {
+  width: 100%;
+  height: 100%;
   border: none;
 }
 
 @media screen and (max-width: 600px) {
   main {
-    flex-direction: column; /* Stack vertically on small screens */
+    flex-direction: column;
   }
 
   .editor-container,
-  #output {
+  .output-container {
     width: 100%;
     height: 50vh;
+  }
+
+  .editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #language-select {
+    margin-top: 10px;
   }
 }
