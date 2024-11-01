@@ -6,6 +6,11 @@ const themeToggle = document.getElementById('theme-toggle');
 const downloadButton = document.getElementById('download-button');
 
 let currentTheme = 'dark';
+let currentLanguage = 'html';
+
+let htmlContent = '';
+let cssContent = '';
+let jsContent = '';
 
 const defaultEditorSettings = {
   lineNumbers: true,
@@ -55,9 +60,16 @@ console.log(doubled);`
 };
 
 languageSelect.addEventListener('change', (e) => {
-  const language = e.target.value;
-  editor.setOption('mode', language);
-  editor.setValue(codeSnippets[language]);
+  const newLanguage = e.target.value;
+  
+  // Save current content
+  saveCurrentContent();
+  
+  // Update editor mode and content
+  editor.setOption('mode', newLanguage);
+  editor.setValue(getContent(newLanguage));
+  
+  currentLanguage = newLanguage;
 });
 
 runButton.addEventListener('click', updateOutput);
@@ -66,22 +78,33 @@ themeToggle.addEventListener('click', toggleTheme);
 
 downloadButton.addEventListener('click', downloadCode);
 
-function updateOutput() {
-  const code = editor.getValue();
-  const language = languageSelect.value;
-
-  let content = '';
-  switch (language) {
+function saveCurrentContent() {
+  switch (currentLanguage) {
     case 'html':
-      content = code;
+      htmlContent = editor.getValue();
       break;
     case 'css':
-      content = `<style>${code}</style>`;
+      cssContent = editor.getValue();
       break;
     case 'javascript':
-      content = `<script>${code}<\/script>`;
+      jsContent = editor.getValue();
       break;
   }
+}
+
+function getContent(language) {
+  switch (language) {
+    case 'html':
+      return htmlContent || codeSnippets.html;
+    case 'css':
+      return cssContent || codeSnippets.css;
+    case 'javascript':
+      return jsContent || codeSnippets.javascript;
+  }
+}
+
+function updateOutput() {
+  saveCurrentContent();
 
   output.srcdoc = `
     <html>
@@ -91,13 +114,31 @@ function updateOutput() {
             font-family: Arial, sans-serif;
             ${currentTheme === 'dark' ? 'background-color: #2d2d2d; color: #f0f0f0;' : ''}
           }
+          ${cssContent}
         </style>
-        ${language === 'css' ? content : ''}
       </head>
       <body>
-        ${language === 'html' ? content : ''}
-        ${language === 'javascript' ? content : ''}
-        ${language === 'javascript' ? '<script>console.log = function(message) { const output = document.createElement("div"); output.textContent = JSON.stringify(message); document.body.appendChild(output); }</script>' : ''}
+        ${htmlContent}
+        <script>
+          ${jsContent}
+          // Capture console.log output
+          (function() {
+            var old = console.log;
+            var logger = document.createElement('div');
+            logger.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.8);color:#fff;padding:10px;font-family:monospace;font-size:14px;white-space:pre-wrap;';
+            document.body.appendChild(logger);
+            console.log = function () {
+              for (var i = 0; i < arguments.length; i++) {
+                if (typeof arguments[i] == 'object') {
+                    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(arguments[i], undefined, 2) : arguments[i]) + '<br />';
+                } else {
+                    logger.innerHTML += arguments[i] + '<br />';
+                }
+              }
+              old.apply(undefined, arguments);
+            }
+          })();
+        </script>
       </body>
     </html>
   `;
@@ -112,7 +153,6 @@ function toggleTheme() {
   
   const themeIcon = document.querySelector('#theme-toggle i');
   if (currentTheme === 'dark') {
-    
     themeIcon.classList.remove('ri-moon-line');
     themeIcon.classList.add('ri-sun-line');
   } else {
@@ -122,16 +162,32 @@ function toggleTheme() {
 }
 
 function downloadCode() {
-  const code = editor.getValue();
-  const language = languageSelect.value;
-  const filename = `code-${language}.txt`;
+  saveCurrentContent();
+  const fullCode = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combined Code</title>
+  <style>
+${cssContent}
+  </style>
+</head>
+<body>
+${htmlContent}
+<script>
+${jsContent}
+</script>
+</body>
+</html>`;
   
-  const blob = new Blob([code], { type: 'text/plain' });
+  const blob = new Blob([fullCode], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename;
+  a.download = 'combined-code.html';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -144,5 +200,8 @@ themeIcon.classList.add('ri-sun-line');
 
 // Initialize with HTML code and dark theme
 editor.setValue(codeSnippets.html);
+htmlContent = codeSnippets.html;
+cssContent = codeSnippets.css;
+jsContent = codeSnippets.javascript;
 document.body.classList.add('dark-mode');
 updateOutput();
