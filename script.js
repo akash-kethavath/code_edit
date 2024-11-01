@@ -1,52 +1,79 @@
-const codeEditor = document.getElementById('code-editor');
-const languageSelect = document.getElementById('language-select');
-const runButton = document.getElementById('run');
-const clearButton = document.getElementById('clear');
-const output = document.getElementById('output');
+* {
+  box-sizing: border-box;
+}
 
-const defaultEditorSettings = {
-  lineNumbers: true,
-  matchBrackets: true,
-  tabSize: 2,
-  indentUnit: 2,
-  theme: 'monokai',
-  lineWrapping: true,
-};
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  font-family: Arial, sans-serif;
+}
 
-const editor = CodeMirror.fromTextArea(codeEditor, {
-  ...defaultEditorSettings,
-  mode: 'html',
-});
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
 
-languageSelect.addEventListener('change', (e) => {
-  const language = e.target.value;
-  editor.setOption('mode', language);
-});
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  flex-grow: 1;
+}
 
-runButton.addEventListener('click', () => {
-  const code = editor.getValue();
-  const language = languageSelect.value;
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
 
-  let content = '';
-  switch (language) {
-    case 'html':
-      content = code;
-      break;
-    case 'css':
-      content = `<style>${code}</style>`;
-      break;
-    case 'javascript':
-      content = `<script>${code}</script>`;
-      break;
+.editor-header h1 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+#language-select {
+  padding: 5px;
+  font-size: 1em;
+}
+
+.CodeMirror {
+  height: 100% !important;
+}
+
+.button-container {
+  padding: 10px;
+  display: flex;
+  background-color: #f0f0f0;
+}
+
+.button-container > button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+#output {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .editor-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  output.srcdoc = content;
-});
-
-clearButton.addEventListener('click', () => {
-  editor.setValue('');
-  output.srcdoc = '';
-});
-
-// Initialize with some example HTML code
-editor.setValue('<h1>Hello, World!</h1>');
+  #language-select {
+    margin-top: 10px;
+  }
+}
