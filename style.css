@@ -6,9 +6,19 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f9f9f9;
   height: 100vh;
   width: 100vw;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.light-mode {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
 }
 
 main {
@@ -22,8 +32,16 @@ main {
   flex-direction: column;
   width: 50%;
   height: 100%;
-  background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+.light-mode .editor-container {
+  background-color: #ffffff;
+}
+
+.dark-mode .editor-container {
+  background-color: #2d2d2d;
 }
 
 .editor-header {
@@ -31,23 +49,47 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
+  border-bottom: 1px solid;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.light-mode .editor-header {
   background-color: #f0f0f0;
-  border-bottom: 1px solid #e0e0e0;
+  border-color: #e0e0e0;
+}
+
+.dark-mode .editor-header {
+  background-color: #3c3c3c;
+  border-color: #4a4a4a;
 }
 
 .editor-header h1 {
   margin: 0;
   font-size: 1.2em;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+#language-select, #theme-toggle {
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border: 1px solid;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.light-mode #language-select, .light-mode #theme-toggle {
+  border-color: #ccc;
   color: #333;
 }
 
-#language-select {
-  padding: 5px 10px;
-  font-size: 0.9em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
+.dark-mode #language-select, .dark-mode #theme-toggle {
+  border-color: #555;
+  color: #f0f0f0;
 }
 
 .CodeMirror {
@@ -56,33 +98,19 @@ main {
   font-family: 'Roboto Mono', monospace;
 }
 
-/* Programiz-like theme */
-.cm-s-programiz.CodeMirror { background: #ffffff; color: #333; }
-.cm-s-programiz .CodeMirror-gutters { background: #f7f7f7; border-right: 1px solid #ddd; }
-.cm-s-programiz .CodeMirror-linenumber { color: #999; }
-.cm-s-programiz .CodeMirror-cursor { border-left: 1px solid #000; }
-.cm-s-programiz .cm-keyword { color: #0000ff; }
-.cm-s-programiz .cm-atom { color: #219; }
-.cm-s-programiz .cm-number { color: #164; }
-.cm-s-programiz .cm-def { color: #00f; }
-.cm-s-programiz .cm-variable { color: black; }
-.cm-s-programiz .cm-property { color: black; }
-.cm-s-programiz .cm-operator { color: black; }
-.cm-s-programiz .cm-comment { color: #008000; }
-.cm-s-programiz .cm-string { color: #a11; }
-.cm-s-programiz .cm-meta { color: #555; }
-.cm-s-programiz .cm-qualifier { color: #555; }
-.cm-s-programiz .cm-builtin { color: #30a; }
-.cm-s-programiz .cm-bracket { color: #997; }
-.cm-s-programiz .cm-tag { color: #170; }
-.cm-s-programiz .cm-attribute { color: #00c; }
-
 .output-container {
   position: relative;
   width: 50%;
   height: 100vh;
+  transition: background-color 0.3s;
+}
+
+.light-mode .output-container {
   background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .output-container {
+  background-color: #2d2d2d;
 }
 
 #run-button {
@@ -97,7 +125,7 @@ main {
   border-radius: 4px;
   font-size: 14px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 #run-button:hover {
@@ -108,7 +136,15 @@ main {
   width: 100%;
   height: 100%;
   border: none;
+  transition: background-color 0.3s;
+}
+
+.light-mode #output {
   background-color: #ffffff;
+}
+
+.dark-mode #output {
+  background-color: #2d2d2d;
 }
 
 @media screen and (max-width: 768px) {
@@ -127,7 +163,49 @@ main {
     align-items: flex-start;
   }
 
-  #language-select {
+  .controls {
     margin-top: 10px;
   }
 }
+
+/* Light theme for CodeMirror */
+.cm-s-light.CodeMirror { background: #ffffff; color: #333; }
+.cm-s-light .CodeMirror-gutters { background: #f7f7f7; border-right: 1px solid #ddd; }
+.cm-s-light .CodeMirror-linenumber { color: #999; }
+.cm-s-light .CodeMirror-cursor { border-left: 1px solid #000; }
+.cm-s-light .cm-keyword { color: #0000ff; }
+.cm-s-light .cm-atom { color: #219; }
+.cm-s-light .cm-number { color: #164; }
+.cm-s-light .cm-def { color: #00f; }
+.cm-s-light .cm-variable { color: black; }
+.cm-s-light .cm-property { color: black; }
+.cm-s-light .cm-operator { color: black; }
+.cm-s-light .cm-comment { color: #008000; }
+.cm-s-light .cm-string { color: #a11; }
+.cm-s-light .cm-meta { color: #555; }
+.cm-s-light .cm-qualifier { color: #555; }
+.cm-s-light .cm-builtin { color: #30a; }
+.cm-s-light .cm-bracket { color: #997; }
+.cm-s-light .cm-tag { color: #170; }
+.cm-s-light .cm-attribute { color: #00c; }
+
+/* Dark theme for CodeMirror */
+.cm-s-dark.CodeMirror { background: #2d2d2d; color: #f0f0f0; }
+.cm-s-dark .CodeMirror-gutters { background: #3c3c3c; border-right: 1px solid #4a4a4a; }
+.cm-s-dark .CodeMirror-linenumber { color: #999; }
+.cm-s-dark .CodeMirror-cursor { border-left: 1px solid #f0f0f0; }
+.cm-s-dark .cm-keyword { color: #569cd6; }
+.cm-s-dark .cm-atom { color: #b5cea8; }
+.cm-s-dark .cm-number { color: #b5cea8; }
+.cm-s-dark .cm-def { color: #9cdcfe; }
+.cm-s-dark .cm-variable { color: #f0f0f0; }
+.cm-s-dark .cm-property { color: #f0f0f0; }
+.cm-s-dark .cm-operator { color: #d4d4d4; }
+.cm-s-dark .cm-comment { color: #6a9955; }
+.cm-s-dark .cm-string { color: #ce9178; }
+.cm-s-dark .cm-meta { color: #d4d4d4; }
+.cm-s-dark .cm-qualifier { color: #d4d4d4; }
+.cm-s-dark .cm-builtin { color: #dcdcaa; }
+.cm-s-dark .cm-bracket { color: #d4d4d4; }
+.cm-s-dark .cm-tag { color: #569cd6; }
+.cm-s-dark .cm-attribute { color: #9cdcfe; }
