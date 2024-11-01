@@ -6,9 +6,9 @@ const output = document.getElementById('output');
 const defaultEditorSettings = {
   lineNumbers: true,
   matchBrackets: true,
-  tabSize: 2,
-  indentUnit: 2,
-  theme: 'dracula',
+  tabSize: 4,
+  indentUnit: 4,
+  theme: 'programiz',
   lineWrapping: true,
 };
 
@@ -22,7 +22,7 @@ languageSelect.addEventListener('change', (e) => {
   editor.setOption('mode', language);
 });
 
-runButton.addEventListener('click', updateOutput); // Run code when RUN button is clicked
+runButton.addEventListener('click', updateOutput);
 
 function updateOutput() {
   const code = editor.getValue();
@@ -56,5 +56,5 @@ function updateOutput() {
 }
 
 // Initialize with some example HTML code
-editor.setValue('<h1>Hello, World!</h1>');
-updateOutput(); // Display the default code initially
+editor.setValue('<h1>Hello, World!</h1>\n<p>Welcome to the Programiz-style code editor!</p>');
+updateOutput();
