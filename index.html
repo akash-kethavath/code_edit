@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Code Editor</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/monokai.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Code Editor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/matchbrackets.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
-<body>
-    <div id="editor-container">
-        <div id="code-editor">
-            <div class="editor-header">
-                <button class="tab-button active" data-tab="html">HTML</button>
-                <button class="tab-button" data-tab="css">CSS</button>
-                <button class="tab-button" data-tab="js">JavaScript</button>
-            </div>
-            <div id="editor-content">
-                <textarea id="html-editor"></textarea>
-                <textarea id="css-editor"></textarea>
-                <textarea id="js-editor"></textarea>
-            </div>
+<body class="dark-mode">
+  <main>
+    <div class="editor-container">
+      <div class="editor-header">
+        <h1>Code Editor</h1>
+        <div class="controls">
+          <select id="language-select">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+          <button id="theme-toggle" aria-label="Toggle theme">
+            <i class="ri-sun-line"></i>
+          </button>
+          <button id="download-button" aria-label="Download code">
+            <i class="ri-download-line"></i>
+          </button>
         </div>
-        <div id="resizer"></div>
-        <div id="output-container">
-            <div class="output-header">
-                <h3>Output</h3>
-                <div>
-                    <label for="live-preview">
-                        <input type="checkbox" id="live-preview" checked> Live Preview
-                    </label>
-                    <button id="run-button">Run</button>
-                </div>
-            </div>
-            <iframe id="output-frame"></iframe>
-        </div>
+      </div>
+      <textarea id="code-editor"></textarea>
     </div>
-    <div id="error-display"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
-    <script src="script.js"></script>
+    <div class="output-container">
+      <button id="run-button">Run</button>
+      <iframe id="output"></iframe>
+    </div>
+  </main>
 </body>
 </html>
