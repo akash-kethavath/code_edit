@@ -7,7 +7,7 @@ const defaultEditorSettings = {
   matchBrackets: true,
   tabSize: 2,
   indentUnit: 2,
-  theme: 'dracula', // Set theme to Dracula
+  theme: 'dracula',
   lineWrapping: true,
 };
 
@@ -36,14 +36,26 @@ function updateOutput() {
       content = code;
       break;
     case 'css':
-      content = `<style>${code}</style>`;
+      content = `<style>${code}</style><div>Live CSS Preview</div>`;
       break;
     case 'javascript':
-      content = `<script>${code}</script>`;
+      content = `<script>${code}<\/script><div>Live JS Preview</div>`;
       break;
   }
 
-  output.srcdoc = content;
+  // Embed code inside HTML structure to handle CSS/JS properly
+  output.srcdoc = `
+    <html>
+      <head>
+        <style>body { font-family: Arial, sans-serif; }</style>
+        ${language === 'css' ? content : ''}
+      </head>
+      <body>
+        ${language === 'html' ? content : ''}
+        ${language === 'javascript' ? content : ''}
+      </body>
+    </html>
+  `;
 }
 
 // Initialize with some example HTML code
