@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
@@ -14,7 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/matchbrackets.min.js"></script>
   <script src="script.js" defer></script>
 </head>
-<body>
+<body class="dark-mode">
   <main>
     <div class="editor-container">
       <div class="editor-header">
@@ -25,7 +26,12 @@
             <option value="css">CSS</option>
             <option value="javascript">JavaScript</option>
           </select>
-          <button id="theme-toggle">Toggle Theme</button>
+          <button id="theme-toggle" aria-label="Toggle theme">
+            <i class="ri-sun-line"></i>
+          </button>
+          <button id="download-button" aria-label="Download code">
+            <i class="ri-download-line"></i>
+          </button>
         </div>
       </div>
       <textarea id="code-editor"></textarea>
