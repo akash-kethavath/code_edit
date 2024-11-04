@@ -1,243 +1,84 @@
 * {
-  box-sizing: border-box;
-  margin: 2px;
-  padding: 2px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  height: 100vh;
-  width: 100vw;
-  transition: background-color 0.4s, color 0.4s;
+    background-color: #282a36; /* Dark background for dark mode */
+    color: #f8f8f2; /* Light text color */
 }
 
-body.light-mode {
-  background-color: #f9f9f9;
-  color: #333;
+h2 {
+    text-align: center;
+    margin-top: 1%;
+    color: #f8f8f2; /* Light color for headers */
 }
 
-body.dark-mode {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
-}
-
-main {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
-
-.editor-container {
-  display: flex;
-  flex-direction: column;
-  width: 49%;
-  height: 100%;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s;
-}
-
-.light-mode .editor-container {
-  background-color: #ffffff;
-}
-
-.dark-mode .editor-container {
-  background-color: #2d2d2d;
-}
-
-.editor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  border-bottom: 1px solid;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-.light-mode .editor-header {
-  background-color: #f0f0f0;
-  border-color: #e0e0e0;
-}
-
-.dark-mode .editor-header {
-  background-color: #3c3c3c;
-  border-color: #4a4a4a;
-}
-
-.editor-header h1 {
-  margin: 2px;
-  font-size: 1.2em;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-}
-
-#language-select {
-  padding: 5px 10px;
-  font-size: 0.9em;
-  border: 1px solid;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.light-mode #language-select {
-  border-color: #ccc;
-  color: #333;
-}
-
-.dark-mode #language-select {
-  border-color: #555;
-  color: #f0f0f0;
-}
-
-#theme-toggle, #download-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.light-mode #theme-toggle, .light-mode #download-button {
-  color: #333;
-}
-
-.dark-mode #theme-toggle, .dark-mode #download-button {
-  color: #f0f0f0;
-}
-
-#theme-toggle:hover, #download-button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.dark-mode #theme-toggle:hover, .dark-mode #download-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.CodeMirror {
-  height: calc(100% - 50px) !important;
-  font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
-}
-
-.output-container {
-  position: relative;
-  width: 50%;
-  height: 100vh;
-  transition: background-color 0.3s;
-}
-
-.light-mode .output-container {
-  background-color: #ffffff;
-}
-
-.dark-mode .output-container {
-  background-color: #2d2d2d;
-}
-
-#run-button {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 8px 16px;
-  background-color: #5cb85c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-#run-button:hover {
-  background-color: #4cae4c;
-}
-
-#output {
-  width: 100%;
-  height: 100%;
-  border: none;
-  transition: background-color 0.3s;
-}
-
-.light-mode #output {
-  background-color: #ffffff;
-}
-
-.dark-mode #output {
-  background-color: #2d2d2d;
-}
-
-@media screen and (max-width: 768px) {
-  main {
-    flex-direction: column;
-  }
-
-  .editor-container,
-  .output-container {
+.container {
     width: 100%;
-    height: 50vh;
-  }
-
-  .editor-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .controls {
-    margin-top: 10px;
-  }
+    height: 100vh;
+    padding: 15px;
+    display: flex;
 }
 
-/* Light theme for CodeMirror */
-.cm-s-light.CodeMirror { background: #ffffff; color: #333; }
-.cm-s-light .CodeMirror-gutters { background: #f7f7f7; border-right: 1px solid #ddd; }
-.cm-s-light .CodeMirror-linenumber { color: #999; }
-.cm-s-light .CodeMirror-cursor { border-left: 1px solid #000; }
-.cm-s-light .cm-keyword { color: #0000ff; }
-.cm-s-light .cm-atom { color: #219; }
-.cm-s-light .cm-number { color: #164; }
-.cm-s-light .cm-def { color: #00f; }
-.cm-s-light .cm-variable { color: black; }
-.cm-s-light .cm-property { color: black; }
-.cm-s-light .cm-operator { color: black; }
-.cm-s-light .cm-comment { color: #008000; }
-.cm-s-light .cm-string { color: #a11; }
-.cm-s-light .cm-meta { color: #555; }
-.cm-s-light .cm-qualifier { color: #555; }
-.cm-s-light .cm-builtin { color: #30a; }
-.cm-s-light .cm-bracket { color: #997; }
-.cm-s-light .cm-tag { color: #170; }
-.cm-s-light .cm-attribute { color: #00c; }
+.input, .output {
+    flex-basis: 50%;
+    padding: 10px;
+}
 
-/* Dark theme for CodeMirror */
-.cm-s-dark.CodeMirror { background: #2d2d2d; color: #f0f0f0; }
-.cm-s-dark .CodeMirror-gutters { background: #3c3c3c; border-right: 1px solid #4a4a4a; }
-.cm-s-dark .CodeMirror-linenumber { color: #999; }
-.cm-s-dark .CodeMirror-cursor { border-left: 1px solid #f0f0f0; }
-.cm-s-dark .cm-keyword { color: #569cd6; }
-.cm-s-dark .cm-atom { color: #b5cea8; }
-.cm-s-dark .cm-number { color: #b5cea8; }
-.cm-s-dark .cm-def { color: #9cdcfe; }
-.cm-s-dark .cm-variable { color: #f0f0f0; }
-.cm-s-dark .cm-property { color: #f0f0f0; }
-.cm-s-dark .cm-operator { color: #d4d4d4; }
-.cm-s-dark .cm-comment { color: #6a9955; }
-.cm-s-dark .cm-string { color: #ce9178; }
-.cm-s-dark .cm-meta { color: #d4d4d4; }
-.cm-s-dark .cm-qualifier { color: #d4d4d4; }
-.cm-s-dark .cm-builtin { color: #dcdcaa; }
-.cm-s-dark .cm-bracket { color: #d4d4d4; }
-.cm-s-dark .cm-tag { color: #569cd6; }
-.cm-s-dark .cm-attribute { color: #9cdcfe; }
+/* Dracula Theme for Text Areas */
+textarea {
+    background-color: #282a36; /* Dracula dark background */
+    color: #f8f8f2; /* Light text color */
+    border: 1px solid #44475a; /* Slightly lighter border */
+    width: 100%;
+    height: 27%;
+    padding: 10px 20px;
+    outline: none;
+    font-size: 18px;
+    border-radius: 5px; /* Slight border rounding */
+    font-family: 'Courier New', Courier, monospace; /* Code-like font */
+}
+
+/* Syntax Highlighting Colors (Dracula Theme) */
+textarea::selection {
+    background-color: #44475a;
+    color: #f8f8f2;
+}
+
+textarea span.keyword {
+    color: #ff79c6; /* Keyword color */
+}
+
+textarea span.string {
+    color: #f1fa8c; /* String color */
+}
+
+textarea span.function {
+    color: #50fa7b; /* Function color */
+}
+
+/* Styling for Iframe */
+iframe {
+    background-color: #1e1e1e; /* Dark background for iframe */
+    width: 100%;
+    height: 90%;
+    border: 1px solid #44475a; /* Slightly lighter border */
+    outline: none;
+}
+
+/* Dracula Themed Label */
+label {
+    display: flex;
+    align-items: center;
+    background-color: #44475a; /* Label background */
+    color: #f8f8f2;
+    padding: 0.5%;
+}
+
+label img {
+    margin-right: 3px;
+    margin-left: 2px;
+}
