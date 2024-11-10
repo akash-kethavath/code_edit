@@ -35,14 +35,23 @@ function generateFileName(target) {
     return `${prefix}-code-${timestamp}.txt`;
 }
 
-window.onload = function() {
-    run();
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const target = event.target.getAttribute('data-target');
 
-    const downloadButtons = document.querySelectorAll('.download-btn');
-    downloadButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const target = this.getAttribute('data-target');
-            downloadCode(target);
-        });
-    });
-};
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(target).value = e.target.result;
+            run(); // Re-run the output to reflect the new code
+        };
+        reader.readAsText(file);
+    }
+}
+
+// Handle the "+" button clicks
+document.querySelectorAll('.upload-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const target = this.getAttribute('data-target');
+        const fileInput = document.getElementById('file-input');
+        fileInput.setAttribute('data
