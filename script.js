@@ -54,4 +54,4 @@ document.querySelectorAll('.upload-btn').forEach(button => {
     button.addEventListener('click', function() {
         const target = this.getAttribute('data-target');
         const fileInput = document.getElementById('file-input');
-        fileInput.setAttribute('data
+        fileInput.setAttribute('data-target', target
