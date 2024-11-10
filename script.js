@@ -5,11 +5,45 @@ function run() {
     let output = document.getElementById("output");
 
     output.contentDocument.body.innerHTML = htmlCode + "<style>" + cssCode + "</style>";
-    output.contentWindow.eval(jsCode);
+    try {
+        output.contentWindow.eval(jsCode);
+    } catch (error) {
+        console.error("Error in JavaScript code:", error);
+    }
 }
 
-function downloadCode(target) {
-    const codeElement = document.getElementById(target);
+function handleFileUpload(event, targetId) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(targetId).value = e.target.result;
+            run();
+        };
+        reader.readAsText(file);
+    }
+}
+
+async function copyCode(targetId) {
+    const codeElement = document.getElementById(targetId);
+    const code = codeElement.value;
+    
+    if (!code.trim()) {
+        alert("The code snippet is empty.");
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(code);
+        alert("Code copied to clipboard!");
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        alert('Failed to copy code to clipboard');
+    }
+}
+
+function downloadCode(targetId, prefix) {
+    const codeElement = document.getElementById(targetId);
     const code = codeElement.value;
     
     if (!code.trim()) {
@@ -20,29 +54,22 @@ function downloadCode(target) {
     const blob = new Blob([code], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `${prefix}-code-${timestamp}.txt`;
+
     const a = document.createElement('a');
     a.href = url;
-    a.download = generateFileName(target);
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
-function generateFileName(target) {
-    const prefix = target.split('-')[0];
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    return `${prefix}-code-${timestamp}.txt`;
-}
+// Add event listeners for file uploads
+document.getElementById('html-upload').addEventListener('change', (e) => handleFileUpload(e, 'html-code'));
+document.getElementById('css-upload').addEventListener('change', (e) => handleFileUpload(e, 'css-code'));
+document.getElementById('js-upload').addEventListener('change', (e) => handleFileUpload(e, 'js-code'));
 
-window.onload = function() {
-    run();
-
-    const downloadButtons = document.querySelectorAll('.download-btn');
-    downloadButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const target = this.getAttribute('data-target');
-            downloadCode(target);
-        });
-    });
-};
+// Initial run
+run();
