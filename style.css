@@ -55,8 +55,9 @@ iframe {
     outline: none;
 }
 
-label {
+.label-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: #44475a;
     color: #f8f8f2;
@@ -64,6 +65,27 @@ label {
     margin-bottom: 5px;
 }
 
+label {
+    display: flex;
+    align-items: center;
+}
+
 label img {
     margin-right: 5px;
+}
+
+.download-btn {
+    background-color: #6272a4;
+    color: #f8f8f2;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #8be9fd;
+    color: #282a36;
 }
