@@ -7,8 +7,6 @@ function run() {
     output.contentDocument.body.innerHTML = htmlCode + "<style>" + cssCode + "</style>";
     output.contentWindow.eval(jsCode);
 }
-
-// Run the function once when the page loads to initialize the iframe
 window.onload = function() {
     run();
 };
