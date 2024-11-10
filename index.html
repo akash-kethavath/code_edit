@@ -3,38 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeEasy</title>
+    <title>CodeEasy - Online Code Editor</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Online Code Editor</h2>
     <div class="container">
-        <div class="input">
-            <div class="label-container">
-                <label><img src="https://img.icons8.com/color/20/html-5--v1.png" alt="html-5--v1"/>HTML</label>
-                <button class="download-btn" data-target="html-code">Download</button>
+        <h2 class="title">Online Code Editor</h2>
+        <div class="editor-container">
+            <div class="input-container">
+                <div class="editor">
+                    <div class="editor-header">
+                        <label class="editor-label">
+                            <img src="https://img.icons8.com/color/20/html-5--v1.png" alt="html-5--v1"/>
+                            HTML
+                        </label>
+                        <div class="button-group">
+                            <input type="file" id="html-upload" accept=".txt" class="file-input">
+                            <label for="html-upload" class="upload-btn">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-KxfBrBtMLreZ98hQN4um0TcXp57fA2.png" alt="Upload file" class="btn-icon">
+                            </label>
+                            <button class="action-btn" onclick="copyCode('html-code')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Da6h3by39PcJeKLk5MBKxBobdMcFLy.png" alt="Copy code" class="btn-icon">
+                            </button>
+                            <button class="action-btn" onclick="downloadCode('html-code', 'html')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-nNz2W0BDzkuyAQ5kA9Bk5i5SnbK28J.png" alt="Download" class="btn-icon">
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="html-code" class="code-input" oninput="run()"></textarea>
+                </div>
+                <div class="editor">
+                    <div class="editor-header">
+                        <label class="editor-label">
+                            <img src="https://img.icons8.com/color/20/css3.png" alt="css3"/>
+                            CSS
+                        </label>
+                        <div class="button-group">
+                            <input type="file" id="css-upload" accept=".txt" class="file-input">
+                            <label for="css-upload" class="upload-btn">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-KxfBrBtMLreZ98hQN4um0TcXp57fA2.png" alt="Upload file" class="btn-icon">
+                            </label>
+                            <button class="action-btn" onclick="copyCode('css-code')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Da6h3by39PcJeKLk5MBKxBobdMcFLy.png" alt="Copy code" class="btn-icon">
+                            </button>
+                            <button class="action-btn" onclick="downloadCode('css-code', 'css')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-nNz2W0BDzkuyAQ5kA9Bk5i5SnbK28J.png" alt="Download" class="btn-icon">
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="css-code" class="code-input" oninput="run()"></textarea>
+                </div>
+                <div class="editor">
+                    <div class="editor-header">
+                        <label class="editor-label">
+                            <img src="https://img.icons8.com/color/20/javascript--v1.png" alt="javascript--v1"/>
+                            JavaScript
+                        </label>
+                        <div class="button-group">
+                            <input type="file" id="js-upload" accept=".txt" class="file-input">
+                            <label for="js-upload" class="upload-btn">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-KxfBrBtMLreZ98hQN4um0TcXp57fA2.png" alt="Upload file" class="btn-icon">
+                            </label>
+                            <button class="action-btn" onclick="copyCode('js-code')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Da6h3by39PcJeKLk5MBKxBobdMcFLy.png" alt="Copy code" class="btn-icon">
+                            </button>
+                            <button class="action-btn" onclick="downloadCode('js-code', 'js')">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-nNz2W0BDzkuyAQ5kA9Bk5i5SnbK28J.png" alt="Download" class="btn-icon">
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="js-code" class="code-input" oninput="run()"></textarea>
+                </div>
             </div>
-            <textarea id="html-code" onkeyup="run()"></textarea>
-
-            <div class="label-container">
-                <label><img src="https://img.icons8.com/color/20/css3.png" alt="css3"/>CSS</label>
-                <button class="download-btn" data-target="css-code">Download</button>
+            <div class="output-container">
+                <div class="editor-header">
+                    <label class="editor-label">
+                        <img src="https://img.icons8.com/fluency/20/pen.png" alt="pen"/>
+                        Preview
+                    </label>
+                </div>
+                <iframe id="output" class="output-frame"></iframe>
             </div>
-            <textarea id="css-code" onkeyup="run()"></textarea>
-
-            <div class="label-container">
-                <label><img src="https://img.icons8.com/color/20/javascript--v1.png" alt="javascript--v1"/>JavaScript</label>
-                <button class="download-btn" data-target="js-code">Download</button>
-            </div>
-            <textarea id="js-code" onkeyup="run()"></textarea>
-        </div>
-
-        <div class="output">
-            <label><img src="https://img.icons8.com/fluency/20/pen.png" alt="pen"/>Preview</label>
-            <iframe id="output"></iframe>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
