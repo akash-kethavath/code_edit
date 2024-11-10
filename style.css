@@ -29,9 +29,6 @@ h2 {
 }
 
 textarea {
-    background-color: #282a36;
-    color: #f8f8f2;
-    border: 1px solid #44475a;
     width: 100%;
     height: 28%;
     padding: 10px 20px;
@@ -74,7 +71,7 @@ label img {
     margin-right: 5px;
 }
 
-.download-btn {
+.download-btn, #theme-toggle {
     background-color: #6272a4;
     color: #f8f8f2;
     border: none;
@@ -85,7 +82,56 @@ label img {
     transition: background-color 0.3s;
 }
 
-.download-btn:hover {
+.download-btn:hover, #theme-toggle:hover {
     background-color: #8be9fd;
-    color: #blue;
+    color: #282a36;
+}
+
+/* Theme styles */
+body.theme-standard, body.theme-standard textarea {
+    background-color: #282a36;
+    color: #f8f8f2;
+}
+
+body.theme-light, body.theme-light textarea {
+    background-color: #f8f8f2;
+    color: #282a36;
+}
+
+body.theme-dark, body.theme-dark textarea {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+textarea {
+    border: 1px solid #44475a;
+}
+
+body.theme-light textarea {
+    border-color: #d1d1d1;
+}
+
+body.theme-dark textarea {
+    border-color: #4a4a4a;
+}
+
+#theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.global-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }
