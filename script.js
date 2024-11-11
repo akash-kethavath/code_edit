@@ -3,10 +3,11 @@ let htmlCode = '';
 let cssCode = '';
 let jsCode = '';
 
-const codeInput = document.getElementById('code-input');
+const editor = document.getElementById('editor');
 const languageBtn = document.getElementById('language-btn');
 const languageDropdown = document.getElementById('language-dropdown');
 const outputFrame = document.getElementById('output');
+const themeToggle = document.getElementById('theme-toggle');
 
 function updateLanguageButton() {
     languageBtn.textContent = currentLanguage.toUpperCase();
@@ -20,27 +21,28 @@ function updateLanguageButton() {
 function setActiveCode() {
     switch (currentLanguage) {
         case 'html':
-            codeInput.value = htmlCode;
+            editor.textContent = htmlCode;
             break;
         case 'css':
-            codeInput.value = cssCode;
+            editor.textContent = cssCode;
             break;
         case 'js':
-            codeInput.value = jsCode;
+            editor.textContent = jsCode;
             break;
     }
+    Prism.highlightElement(editor);
 }
 
 function saveActiveCode() {
     switch (currentLanguage) {
         case 'html':
-            htmlCode = codeInput.value;
+            htmlCode = editor.textContent;
             break;
         case 'css':
-            cssCode = codeInput.value;
+            cssCode = editor.textContent;
             break;
         case 'js':
-            jsCode = codeInput.value;
+            jsCode = editor.textContent;
             break;
     }
 }
@@ -71,7 +73,7 @@ languageDropdown.addEventListener('click', (e) => {
     }
 });
 
-codeInput.addEventListener('input', () => {
+editor.addEventListener('input', () => {
     saveActiveCode();
     run();
 });
@@ -87,8 +89,9 @@ document.getElementById('file-upload').addEventListener('change', (e) => {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            codeInput.value = e.target.result;
+            editor.textContent = e.target.result;
             saveActiveCode();
+            Prism.highlightElement(editor);
             run();
         };
         reader.readAsText(file);
@@ -96,7 +99,7 @@ document.getElementById('file-upload').addEventListener('change', (e) => {
 });
 
 document.querySelector('.copy-btn').addEventListener('click', async () => {
-    const code = codeInput.value;
+    const code = editor.textContent;
     if (!code.trim()) {
         alert("The code snippet is empty.");
         return;
@@ -115,7 +118,7 @@ document.querySelector('.copy-btn').addEventListener('click', async () => {
 });
 
 document.querySelector('.download-btn').addEventListener('click', () => {
-    const code = codeInput.value;
+    const code = editor.textContent;
     if (!code.trim()) {
         alert("The code snippet is empty. Please add some code before downloading.");
         return;
@@ -123,7 +126,8 @@ document.querySelector('.download-btn').addEventListener('click', () => {
     const blob = new Blob([code], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `${currentLanguage}-code-${timestamp}.txt`;
+    const fileExtension = currentLanguage === 'js' ? 'js' : (currentLanguage === 'css' ? 'css' : 'html');
+    const filename = `${currentLanguage}-code-${timestamp}.${fileExtension}`;
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
@@ -133,7 +137,37 @@ document.querySelector('.download-btn').addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
+// Theme switcher
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+});
+
+// Line numbers
+function addLineNumbers() {
+    const lineNumbers = document.createElement('div');
+    lineNumbers.className = 'line-numbers';
+    const lines = editor.textContent.split('\n');
+    lines.forEach(() => {
+        const span = document.createElement('span');
+        lineNumbers.appendChild(span);
+    });
+    editor.parentNode.insertBefore(lineNumbers, editor);
+}
+
+// Auto-indent
+editor.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        editor.textContent = editor.textContent.substring(0, start) + '    ' + editor.textContent.substring(end);
+        editor.selectionStart = editor.selectionEnd = start + 4;
+        Prism.highlightElement(editor);
+    }
+});
+
 // Initialize
 updateLanguageButton();
 setActiveCode();
+addLineNumbers();
 run();
